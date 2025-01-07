@@ -19,10 +19,15 @@ export async function signup(formData: FormData): Promise<AuthResponse> {
         const data = {
             email: formData.get("email") as string,
             password: formData.get("password") as string,
-            options: {
-                firstName: formData.get("firstName") as string
+            options: { // mistake was here, instead of fullName , firstName was written
+                data:{ 
+                    fullName: formData.get("fullName") as string
+                }
             }
         }
+
+        console.log(JSON.stringify(data));
+        
 
         const { data: signupData, error } = await supabaseClient.auth.signUp(data);
 

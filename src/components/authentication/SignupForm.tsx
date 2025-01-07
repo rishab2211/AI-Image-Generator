@@ -32,7 +32,7 @@ const formSchema = z
         required_error: "Full name is required",
       })
       .min(2,{
-        message : "Fullname must contain atleast 2 character"
+        message : "fullName must contain atleast 2 character"
       })
       .max(50),
     email: z.string().email({
@@ -81,6 +81,7 @@ const SignupForm = () => {
     setLoading(true);
 
     const formData =new FormData();
+
     formData.append("fullName",values.fullName);
     formData.append("email",values.email);
     formData.append("password",values.password);
@@ -114,7 +115,7 @@ const SignupForm = () => {
                 <FormItem>
                   <FormLabel>Full name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your full name" {...field} />
+                    <Input placeholder="Enter your full name" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
