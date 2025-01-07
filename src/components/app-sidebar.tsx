@@ -19,13 +19,15 @@ export async function AppSidebar({
   const supabaseClient = await createClient();
   const { data } = await supabaseClient.auth.getUser();
 
-  console.log(data);
+  // console.log(data);
 
   const user = {
     name : data.user?.user_metadata.fullName,
     email : data.user?.email || "example@gmail.com"
   }
-  console.log(user);
+  // console.log(user);
+
+  
   
 
   return (

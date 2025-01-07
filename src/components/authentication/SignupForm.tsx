@@ -18,7 +18,7 @@ import { useId, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { signup } from "@/app/auth-actions";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 
@@ -62,6 +62,7 @@ const SignupForm = () => {
 
     const [loading, setLoading] = useState(false);
     const toastId = useId();
+    const router = useRouter();
 
 
   // 1. Define your form.
@@ -95,7 +96,7 @@ const SignupForm = () => {
         toast.error(String(error),{id: toastId});
     }else{
         toast.success("Signed up successfully! Please confirm email validation with the link sent at your email address ", {id:toastId});
-        redirect("/login");
+        router.push("/login");
     }
 
     setLoading(false)

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useId, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { login } from "@/app/auth-actions";
 
 
@@ -41,6 +41,7 @@ const formSchema = z.object({
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const toastId = useId();
+  const router= useRouter();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -69,7 +70,7 @@ const LoginForm = () => {
       toast.error(String(error), { id: toastId });
     } else {
       toast.success("Signed in successfully!", { id: toastId });
-      redirect("/dashboard");
+      router.push("/dashboard");
     }
 
     setLoading(false);

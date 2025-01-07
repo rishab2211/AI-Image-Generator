@@ -1,14 +1,14 @@
-
 "use client";
 
 import { logout } from "@/app/auth-actions";
+import { useRouter } from "next/navigation";
 
 const LogoutBtn = () => {
+  const router = useRouter();
   const handleLogout = async () => {
     try {
       await logout();
-      console.log("User successfully logged out");
-      // Optionally redirect or provide feedback to the user
+      router.push("/login");
     } catch (error) {
       console.error("Logout failed", error);
     }
@@ -18,7 +18,7 @@ const LogoutBtn = () => {
     <button
       type="button"
       onClick={handleLogout}
-      className="inline-block w-full cursor-pointer text-destructive"
+      className=" cursor-pointer text-destructive"
     >
       Logout
     </button>

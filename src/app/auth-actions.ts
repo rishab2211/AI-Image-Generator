@@ -26,7 +26,7 @@ export async function signup(formData: FormData): Promise<AuthResponse> {
             }
         }
 
-        console.log(JSON.stringify(data));
+        // console.log(JSON.stringify(data));
         
 
         const { data: signupData, error } = await supabaseClient.auth.signUp(data);
