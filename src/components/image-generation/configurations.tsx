@@ -49,7 +49,7 @@ const output = await replicate.run("black-forest-labs/flux-dev", { input });
 console.log(output);
 
 */
-const formSchema = z.object({
+export const ImageGenerationFormSchema = z.object({
   model: z.string({
     required_error: "Model is required",
   }).min(4,{
@@ -104,8 +104,8 @@ const formSchema = z.object({
 
 const Configurations = () => {
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof ImageGenerationFormSchema>>({
+    resolver: zodResolver(ImageGenerationFormSchema),
     defaultValues: {
       model: "",
       prompt: "",
@@ -119,7 +119,7 @@ const Configurations = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof ImageGenerationFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
