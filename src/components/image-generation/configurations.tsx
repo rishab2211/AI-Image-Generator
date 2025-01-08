@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -51,9 +52,13 @@ console.log(output);
 const formSchema = z.object({
   model: z.string({
     required_error: "Model is required",
+  }).min(4,{
+    message : "Select a model"
   }),
   prompt: z.string({
     required_error: "Prompt is required",
+  }).nonempty({
+    message:"Prompt cannot be empty"
   }),
   guidance: z
     .number({
@@ -102,7 +107,7 @@ const Configurations = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      model: "black-forest-labs/flux-dev",
+      model: "",
       prompt: "",
       guidance: 3,
       num_outputs: 1,
@@ -146,7 +151,7 @@ const Configurations = () => {
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        value={field.value}
+                        
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -237,9 +242,9 @@ const Configurations = () => {
                             onChange={(event) =>
                               field.onChange(+event.target.value)
                             }
+                            defaultValue={field.value}
                           />
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
@@ -373,7 +378,7 @@ const Configurations = () => {
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        value={field.value}
+                        defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
