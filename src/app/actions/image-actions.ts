@@ -13,7 +13,7 @@ interface ImageResponse {
     data: unknown | null
 }
 
-export async function generateImage(input: z.infer<typeof ImageGenerationFormSchema>): ImageResponse {
+export async function generateImage(input: z.infer<typeof ImageGenerationFormSchema>): Promise<ImageResponse> {
     try {
         const modelInput = {
             prompt: input.prompt,
