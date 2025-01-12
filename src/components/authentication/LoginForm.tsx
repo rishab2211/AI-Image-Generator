@@ -18,7 +18,7 @@ import { useId, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { login } from "@/app/auth-actions";
+import { login } from "@/app/actions/auth-actions";
 
 
 

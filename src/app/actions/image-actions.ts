@@ -36,7 +36,7 @@ export async function generateImage(input: z.infer<typeof ImageGenerationFormSch
             success: true,
             data: output
         })
-    } catch (err : any) {
+    } catch (err: any) {
         return ({
             error: err.message || "Failed to generate image",
             success: false,

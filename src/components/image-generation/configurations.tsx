@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
+import { generateImage } from "@/app/actions/image-actions";
 
 /*
 const input = {
@@ -50,16 +51,20 @@ console.log(output);
 
 */
 export const ImageGenerationFormSchema = z.object({
-  model: z.string({
-    required_error: "Model is required",
-  }).min(4,{
-    message : "Select a model"
-  }),
-  prompt: z.string({
-    required_error: "Prompt is required",
-  }).nonempty({
-    message:"Prompt cannot be empty"
-  }),
+  model: z
+    .string({
+      required_error: "Model is required",
+    })
+    .min(4, {
+      message: "Select a model",
+    }),
+  prompt: z
+    .string({
+      required_error: "Prompt is required",
+    })
+    .nonempty({
+      message: "Prompt cannot be empty",
+    }),
   guidance: z
     .number({
       required_error: "Guidance scale is required",
@@ -119,9 +124,14 @@ const Configurations = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ImageGenerationFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof ImageGenerationFormSchema>) {
+    const { error, success, data } = await generateImage(values);
+    console.log("error :"+error);
+    console.log("succes: "+success);
+    console.log("data : "+data);
+    
+    
+    
     console.log(values);
   }
 
@@ -149,10 +159,7 @@ const Configurations = () => {
                           </TooltipContent>
                         </Tooltip>
                       </FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        
-                      >
+                      <Select onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select a model" />
@@ -296,12 +303,13 @@ const Configurations = () => {
                         <span>{field.value}</span>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Info size={12}  />
+                            <Info size={12} />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
                               Number of denoising steps. Recommended range is
-                              28-50,<br/> and lower number of steps produce lower
+                              28-50,
+                              <br /> and lower number of steps produce lower
                               quality outputs, faster
                             </p>
                           </TooltipContent>
@@ -337,8 +345,11 @@ const Configurations = () => {
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
-                            Quality when saving the output images, from 0 to 100.
-                            <br/>100 is best quality, 0 is lowest quality. Not relevant for .png outputs
+                              Quality when saving the output images, from 0 to
+                              100.
+                              <br />
+                              100 is best quality, 0 is lowest quality. Not
+                              relevant for .png outputs
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -364,15 +375,14 @@ const Configurations = () => {
                   name="aspect_ratio"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Output format :
-                      <Tooltip>
+                      <FormLabel>
+                        Output format :
+                        <Tooltip>
                           <TooltipTrigger>
                             <Info size={12} className="ml-1" />
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>
-                           Format of the output image
-                            </p>
+                            <p>Format of the output image</p>
                           </TooltipContent>
                         </Tooltip>
                       </FormLabel>
@@ -384,8 +394,8 @@ const Configurations = () => {
                           <SelectTrigger>
                             <SelectValue placeholder="Select output format" />
                           </SelectTrigger>
-                        </FormControl >
-                        <SelectContent  >
+                        </FormControl>
+                        <SelectContent>
                           <SelectItem value="jpg">jpg</SelectItem>
                           <SelectItem value="png">png</SelectItem>
                           <SelectItem value="webp">webp</SelectItem>
@@ -401,20 +411,23 @@ const Configurations = () => {
                   name="prompt"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Prompt
-                      <Tooltip>
+                      <FormLabel>
+                        Prompt
+                        <Tooltip>
                           <TooltipTrigger>
                             <Info size={12} className="ml-1" />
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>
-                           Prompt for the generated image
-                            </p>
+                            <p>Prompt for the generated image</p>
                           </TooltipContent>
                         </Tooltip>
                       </FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Write a prompt to generate image..." {...field} rows={6} />
+                        <Textarea
+                          placeholder="Write a prompt to generate image..."
+                          {...field}
+                          rows={6}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
